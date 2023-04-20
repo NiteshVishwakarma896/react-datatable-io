@@ -11,10 +11,11 @@ npm install --save react-datatable-io
 ```
 ## DataTable Props
 
-<b>tableHeader</b>: These will be headers that will be avaliable in the table header.
-<b>tableData</b>: It will be an array of json data.
-<b>isSearchEnabled</b>: To enable search functionality in the table.
-<b>isExportToExcel</b>: To enable table data to be exported to an excel file.
+<b>tableHeader</b>: These will be headers that will be avaliable in the table header.<br/>
+<b>tableData</b>: It will be an array of json data.<br/>
+<b>isSearchEnabled</b>: To enable search functionality in the table.<br/>
+<b>isExportToExcel</b>: To enable table data to be exported to an excel file.<br/>
+<br/>
 <br/>
 To see more about it checkout below example. 
 
