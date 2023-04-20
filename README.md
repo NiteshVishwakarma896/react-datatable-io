@@ -4,6 +4,10 @@
 
 [![NPM](https://img.shields.io/npm/v/react-datatable-io.svg)](https://www.npmjs.com/package/react-datatable-io) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Demo
+
+![image](https://user-images.githubusercontent.com/45270353/233391253-a24a60ab-7205-4064-af89-26c0baf90c29.png)
+
 ## Install
 
 ```bash
