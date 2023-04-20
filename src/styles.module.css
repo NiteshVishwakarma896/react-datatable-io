@@ -1,0 +1,44 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
+
+html,body{
+    margin: 0%;
+    padding: 0%;
+    zoom: 0.95;
+}
+.tableSearch{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.searchbarInput{
+    width: 20rem !important;
+    padding: 6px !important;
+    border-radius: 2px;
+    border-color: #E4E4E4 !important;
+    outline-width: 0.25px !important;
+    outline-color: #b1b1b1 !important;
+    margin-top: 6px;
+    margin-right: 1rem;
+}
+.searchbarInput::placeholder{
+    font-size: 0.9rem;
+}
+.desktopHide{
+    display: none !important;
+}
+@media (max-width:450px) {
+    .searchbarInput{
+        width: 100% !important;
+        margin-bottom: 8px;
+    }
+    .mobileHide{
+        display: none !important;
+    }
+    .desktopHide{
+        display: block !important;
+    }
+}
