@@ -8,26 +8,20 @@ import exportFromJSON from 'export-from-json'
 export const ReactDataTableIO = (props) => {
   let fileName = new Date().toLocaleString();
   const [searchVal, setSearchVal] = useState("");
-  const [initalData,setInitalData] = useState(props.tableData);
+  const [initalData,setInitalData] = useState([]);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setrRowsPerPage] = useState(5);
   const [tableRange, setTableRange] = useState([]);
   const [dataLength,setDataLength] = useState(0);
   const [slice, setSlice] = useState([]);
-  const [tableBodyData,setTableBodyData] = useState([
-    {"id":1,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-    {"id":2,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-    {"id":3,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-    {"id":4,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-    {"id":5,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-  ]);
-  const [optionsData,setOptions] = useState([
-    { label: "#", key:"id" ,value: true },
-    { label: "First Name", key:"fname", value: true },
-    { label: "Last Name", key:"lname", value: true },
-    { label: "Username", key:"uname", value: true },
-  ]);
+  const [tableBodyData,setTableBodyData] = useState([]);
   const [selected, setSelected] = useState([]);
+
+  useEffect(()=>{
+    setInitalData(props.tableData);
+    setSelected(props.tableHeader)
+  },[])
+
   const selectedOptionsStyles = {
       color: "#3c763d",
       backgroundColor: "#dff0d8"
@@ -68,9 +62,6 @@ export const ReactDataTableIO = (props) => {
     setDataLength(initalData.length);
   }, [initalData, setTableRange, page, setSlice, rowsPerPage]);
   
-  useEffect(()=>{
-    setSelected(optionsData);
-  },[])
 
   useEffect(()=>{
     setTableBodyData(slice);
@@ -94,19 +85,21 @@ export const ReactDataTableIO = (props) => {
     searchVal === ""?(
       Array.from(tableBodyData).map((e,i)=>(
         <tr key={i}>
-          <td>{e.id}</td>
-          <td>{e.fname}</td>
-          <td>{e.lname}</td>
-          <td>{e.username}</td>
+          {
+            Object.keys(e).map(function(key) {
+              return <td>{e[key]}</td>
+            })
+          }
         </tr>
       ))
     ):(
       Array.from(tableBodyData).map((e,i)=>(
         <tr key={i}>
-          <td>{e.id}</td>
-          <td>{e.fname}</td>
-          <td>{e.lname}</td>
-          <td>{e.username}</td>
+          {
+            Object.keys(e).map(function(key) {
+              return <td>{e[key]}</td>
+            })
+          }
         </tr>
       ))
     )
