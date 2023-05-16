@@ -7,7 +7,15 @@
 ## Demo
 <b>Demo Link</b>: https://niteshvishwakarma896.github.io/react-datatable-io/
 
-![image](https://user-images.githubusercontent.com/45270353/233391253-a24a60ab-7205-4064-af89-26c0baf90c29.png)
+<table>
+  <tr>
+    <td><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/45270353/238587075-7b35e6bf-aa6c-4afc-b3bb-498ed1924852.png" width=270 height=550></td>
+    <td><img src="https://github.com/NiteshVishwakarma896/react-datatable-io/assets/45270353/21ed25ff-1286-43bd-a34a-a457825397c0" width=270 height=550></td>
+  </tr>
+ </table>
+![desktop-view-2](https://github.com/NiteshVishwakarma896/react-datatable-io/assets/45270353/2bc830cc-b015-440b-a3cb-e82c0f50fa1a)
+<br/>
+![desktop-view](https://github.com/NiteshVishwakarma896/react-datatable-io/assets/45270353/e3c2e562-38a0-4c09-a30e-77a2a4454530)
 
 ## Install
 
