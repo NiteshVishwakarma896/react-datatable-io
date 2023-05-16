@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/react-datatable-io.svg)](https://www.npmjs.com/package/react-datatable-io) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Demo
-(https://niteshvishwakarma896.github.io/react-datatable-io/)
+<b>Demo Link</b>: https://niteshvishwakarma896.github.io/react-datatable-io/
 
 ![image](https://user-images.githubusercontent.com/45270353/233391253-a24a60ab-7205-4064-af89-26c0baf90c29.png)
 
@@ -19,7 +19,13 @@ npm install --save react-datatable-io
 <b>tableHeader</b>: These will be headers that will be avaliable in the table header.<br/>
 <b>tableData</b>: It will be an array of json data.<br/>
 <b>isSearchEnabled</b>: To enable search functionality in the table.<br/>
-<b>isExportToExcel</b>: To enable table data to be exported to an excel file.<br/>
+<b>isExport</b>: To enable table data to be exported to excel,csv,json format file.<br/>
+<b>isTableToggle</b>: To toggle table view to list or table.<br/>
+<b>tableStriped</b>: Set table rows to be stripped as bootstrap table.<br/>
+<b>tableBordered</b>: Set table rows to have a border as bootstrap table.<br/>
+<b>tableHover</b>: Set table rows to hover when mouse is over.<br/>
+<b>tableResponsive</b>: To make table responsive for the other devices.<br/>
+<b>tableHeaderStyle</b>: Style your table header as you want, by passing the JSX styles.<br/>
 <br/>
 <br/>
 To see more about it checkout below example. 
