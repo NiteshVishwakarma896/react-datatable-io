@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from './styles.module.css'
-import { Button, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap';
-import  MultiSelectReact  from 'multi-select-react';
+import { Col, Container, Form, Row, Table } from 'react-bootstrap';
+import Dropdown from 'react-bootstrap/Dropdown';
 import TableFooter from './component/TableFooter';
 import exportFromJSON from 'export-from-json'  
+import Card from 'react-bootstrap/Card';
 
 export const ReactDataTableIO = (props) => {
   let fileName = new Date().toLocaleString();
@@ -16,26 +17,21 @@ export const ReactDataTableIO = (props) => {
   const [slice, setSlice] = useState([]);
   const [tableBodyData,setTableBodyData] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [sortField, setSortField] = useState("");
+  const [order, setOrder] = useState("asc");
+  const [toggleTableView,setToggleTableView] = useState(false);
 
   useEffect(()=>{
     setInitalData(props.tableData);
     setSelected(props.tableHeader)
   },[])
-
-  const selectedOptionsStyles = {
-      color: "#3c763d",
-      backgroundColor: "#dff0d8"
-  };
-  const optionsListStyles = {
-      backgroundColor: "#dff0d8",
-      fontWeight:'400',
-      color: "#000"
-  };
-  const optionClicked = (optionsList) =>{
-    setSelected(optionsList);
-  }
-  const selectedBadgeClicked = (optionsList) => {
-    setSelected(optionsList);
+  const toTitleCase = (str)=>{
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
   }
   const calculateRange = (data, rowsPerPage) => {
       const range = [];
@@ -50,7 +46,13 @@ export const ReactDataTableIO = (props) => {
       return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   };
   const exportToExcel = ()=>{
+    exportFromJSON({ data:initalData, fileName:fileName, exportType:exportFromJSON.types.xls })  
+  }
+  const exportToCSV = ()=>{
     exportFromJSON({ data:initalData, fileName:fileName, exportType:exportFromJSON.types.csv })  
+  }
+  const exportToJSON = ()=>{
+    exportFromJSON({ data:initalData, fileName:fileName, exportType:exportFromJSON.types.json })  
   }
   useEffect(() => {
     const range = calculateRange(initalData, rowsPerPage);
@@ -68,10 +70,6 @@ export const ReactDataTableIO = (props) => {
   },[slice])
 
   useEffect(()=>{
-    let selectedVal = selected.filter((e)=>{return e.value ===false})
-  },[selected])
-
-  useEffect(()=>{
     if (searchVal === "") { setTableBodyData(slice); return; }
     const filterBySearch = props.tableData.filter((item) => {
         if (Object.values(item).toString().toLowerCase().includes(searchVal.toLowerCase())) { 
@@ -86,8 +84,8 @@ export const ReactDataTableIO = (props) => {
       Array.from(tableBodyData).map((e,i)=>(
         <tr key={i}>
           {
-            Object.keys(e).map(function(key) {
-              return <td>{e[key]}</td>
+            Object.keys(e).map(function(keyValue) {
+              return <td id={keyValue}>{e[keyValue]}</td>
             })
           }
         </tr>
@@ -96,14 +94,75 @@ export const ReactDataTableIO = (props) => {
       Array.from(tableBodyData).map((e,i)=>(
         <tr key={i}>
           {
-            Object.keys(e).map(function(key) {
-              return <td>{e[key]}</td>
+            Object.keys(e).map(function(keyValue) {
+              return <td id={keyValue}>{e[keyValue]}</td>
             })
           }
         </tr>
       ))
     )
   )
+
+  const renderTableList = (searchVal)=>(
+    searchVal === ""?(
+      Array.from(tableBodyData).map((e,i)=>(
+        <Card className={`p-4 mb-2 shadow-sm`} key={i}>
+          {
+            Object.keys(e).map(function(keyValue) {
+              return (
+                <React.Fragment>
+                  <div className={styles.desktopRowList}>
+                    <h6 id={keyValue}><b>{toTitleCase(keyValue)}</b></h6>
+                    <h6 id={keyValue}>{e[keyValue]}</h6>
+                  </div>
+                </React.Fragment>
+              )
+            })
+          }
+        </Card>
+      ))
+    ):(
+      Array.from(tableBodyData).map((e,i)=>(
+        <Card className='p-4 mb-2 shadow-sm' key={i}>
+          {
+            Object.keys(e).map(function(keyValue) {
+              return (
+                <React.Fragment>
+                  <div className={styles.desktopRowList}>
+                    <h6 id={keyValue}><b>{toTitleCase(keyValue)}</b></h6>
+                    <h6 id={keyValue}>{e[keyValue]}</h6>
+                  </div>
+                </React.Fragment>
+              )
+            })
+          }
+        </Card>
+      ))
+    )
+  )
+
+  const handleSortingChange = (accessor) => {
+    const sortOrder = accessor === sortField && order === "asc" ? "desc" : "asc";
+    setSortField(accessor);
+    setOrder(sortOrder);
+    handleSorting(accessor, sortOrder);
+  };
+
+  const handleSorting = (sortField, sortOrder) => {
+    if (sortField) {
+     const sorted = [...tableBodyData].sort((a, b) => {
+      if (a[sortField] === null) return 1;
+      if (b[sortField] === null) return -1;
+      if (a[sortField] === null && b[sortField] === null) return 0;
+      return (
+       a[sortField].toString().localeCompare(b[sortField].toString(), "en", {
+        numeric: true,
+       }) * (sortOrder === "asc" ? 1 : -1)
+      );
+     });
+     setTableBodyData(sorted);
+    }
+  };
 
   return (
     <Container fluid>
@@ -113,35 +172,78 @@ export const ReactDataTableIO = (props) => {
             <input type='text' onChange={(e)=>setSearchVal(e.target.value)} className={styles.searchbarInput} placeholder='Search for items...'  />
           ):null
         }
-        {
-          props.isExportToExcel?(
-            <div>
-            <button className={`btn btn-success ${styles.mobileHide}`} onClick={exportToExcel} >
-              <i className="bi bi-file-earmark-spreadsheet"></i>
-              {" "}
-              Export to Excel
-            </button>
-            <button className={`btn btn-success ${styles.desktopHide}`} onClick={exportToExcel} >
-              <i className="bi bi-file-earmark-spreadsheet"></i>
-            </button>
-            </div>
-          ):null
-        }
+        <div className={styles.desktopRow}>
+          {
+            props.isTableToggle?(
+              <button onClick={()=>setToggleTableView(!toggleTableView)} className='btn btn-secondary mr-2'>
+                {
+                  (toggleTableView)?(
+                    <i class="bi bi-list-ul"></i>
+                  ):(
+                    <i class="bi bi-table"></i>
+                  )
+                }
+              </button>
+            ):(null)
+          }
+          
+          {
+            props.isExport?(
+              <React.Fragment>
+                <Dropdown drop='down-centered' className={`${styles.mobileHide}`}>
+                        <Dropdown.Toggle variant='secondary' id="dropdown-basic">
+                          <i className="bi bi-file-earmark-spreadsheet"></i>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={exportToExcel}>Export to Excel</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item onClick={exportToJSON}>Export to JSON</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item onClick={exportToCSV}>Export to CSV</Dropdown.Item>
+                        </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown drop='down-centered' className={`${styles.desktopHide}`}>
+                        <Dropdown.Toggle variant='secondary' id="dropdown-basic">
+                          <i className="bi bi-file-earmark-spreadsheet"></i>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={exportToExcel}>Export to Excel</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item onClick={exportToJSON}>Export to JSON</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item onClick={exportToCSV}>Export to CSV</Dropdown.Item>
+                        </Dropdown.Menu>
+                </Dropdown>
+              </React.Fragment>
+            ):null
+          }
+        </div>
+        
       </div>
-      <Table striped bordered hover responsive bsPrefix='table' {...props}>
-          <thead>
-            <tr>
-              {
-                Array.from(selected).map((e,i)=>(
-                  e.value?<th key={i}>{e.label}</th>:null
-                ))
-              }
-            </tr>
-          </thead>
-          <tbody>
-            {renderTableBody(searchVal)}
-          </tbody>
-      </Table>
+      {
+        (toggleTableView)?(
+          renderTableList(searchVal)
+        ):(
+          <Table striped={props.tableStriped} bordered={props.tableBordered} hover={props.tableHover} responsive={props.tableResponsive} bsPrefix='table'>
+              <thead style={props.tableHeaderStyle}>
+                <tr>
+                  {
+                    Array.from(selected).map((e,i)=>(
+                      e.value?<th key={e.key} className={e.sortable ? sortField === e.key && order === "asc" ? styles.tableSortUp : sortField === e.key && order === "desc" ? styles.tableSortDown : styles.tableSortDefault : ""}  onClick={e.sortable ? () => handleSortingChange(e.key) : null}>{e.label}</th>:null
+                    ))
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  renderTableBody(searchVal)
+                }
+              </tbody>
+          </Table>
+        )
+      }
       <Row className='mt-2 mt-md-2 mt-lg-2 mt-xl-2'>
         <Col sm={12} xl={2}>
           {

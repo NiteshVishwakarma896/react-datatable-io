@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { ReactDataTableIO } from '.'
 
-describe('ExampleComponent', () => {
+describe('ReactDataTableIO', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(ReactDataTableIO).toBeTruthy()
   })
 })

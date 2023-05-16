@@ -5,6 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/react-datatable-io.svg)](https://www.npmjs.com/package/react-datatable-io) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Demo
+(https://niteshvishwakarma896.github.io/react-datatable-io/)
 
 ![image](https://user-images.githubusercontent.com/45270353/233391253-a24a60ab-7205-4064-af89-26c0baf90c29.png)
 
@@ -26,40 +27,56 @@ To see more about it checkout below example.
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
 import { ReactDataTableIO } from 'react-datatable-io'
 import 'react-datatable-io/dist/index.css'
 
-export default Example = () = >{
+const App = () => {
   const data =[
-      {"id":1,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":2,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":3,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":4,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":5,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":6,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":7,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":8,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":9,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":10,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":11,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":12,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":13,"fname":'Mark',"lname":"Otto","username":'@mdo'},
-      {"id":14,"fname":'Mark',"lname":"Otto","username":'@mdo'},
+    {"id":1,"fname":'Mark',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Success"},
+    {"id":2,"fname":'Nitesh',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Success"},
+    {"id":3,"fname":'Akash',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Success"},
+    {"id":4,"fname":'Smith',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Success"},
+    {"id":5,"fname":'Zolo',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Success"},
+    {"id":6,"fname":'Olo',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":7,"fname":'Oark',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":8,"fname":'Smark',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":9,"fname":'Akark',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":10,"fname":'Lark',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":11,"fname":'Sneha',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":12,"fname":'Neha',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":13,"fname":'Manish',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
+    {"id":14,"fname":'Naman',"lname":"Otto","username":'@mdo',"date":'21-04-2000',"time":'21-04-2000',status:"Failed"},
   ]
   const header =[
-    { label: "#", key:"id" ,value: true },
-    { label: "First Name", key:"fname", value: true },
-    { label: "Last Name", key:"lname", value: true },
-    { label: "Username", key:"uname", value: true },
+    { label: "#", key:"id" ,value: true, sortable: true  },
+    { label: "First Name", key:"fname", value: true, sortable: true },
+    { label: "Last Name", key:"lname", value: true, sortable: true },
+    { label: "Username", key:"uname", value: true, sortable: true },
+    { label: "Date", key:"date", value: true, sortable: true },
+    { label: "Time", key:"time", value: true, sortable: true },
+    { label: "Status", key:"status", value: true, sortable: true },
   ]
-  return() {
-    return(
-      <ReactDataTableIO tableData={data} tableHeader={header} isSearchEnabled={true} isExportToExcel={true} />
-    )
-  }
+  return <ReactDataTableIO 
+            tableData={data}
+            tableHeader={header}
+            isSearchEnabled={true}
+            isExport={true}
+            isTableToggle={true}
+            tableStriped={false}
+            tableBordered={false}
+            tableHover={true}
+            tableResponsive={true}
+            tableHeaderStyle={{
+              backgroundColor:"#232323",
+              color:"#fff",
+            }}
+          />
 }
+
+export default App
+
 ```
 
 ## License

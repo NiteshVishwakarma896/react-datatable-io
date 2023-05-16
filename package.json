@@ -1,8 +1,13 @@
 {
   "name": "react-datatable-io",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "React-Datatable IO is a component which provide ability to create multifunctional table using single component like jQuery Datatable",
-  "keywords": ["react-table","react-datatable","datatable","table"],
+  "keywords": [
+    "react-table",
+    "react-datatable",
+    "datatable",
+    "table"
+  ],
   "author": "NiteshVishwakarma896",
   "license": "MIT",
   "repository": "NiteshVishwakarma896/react-datatable-io",
@@ -43,6 +48,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
+    "react-multiselect-dropdown-bootstrap": "^1.1.0",
     "react-scripts": "^5.0.1"
   },
   "files": [
